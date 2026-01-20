@@ -1,24 +1,21 @@
-﻿using System;
+﻿using Pet_Project.Data.HelpModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pet_Project
+namespace Pet_Project.Data.Models
 {
-    internal class IMSAdmin : Worker
+    internal class ISAdmin : Worker
     {
-
-       
-
-        public IMSAdmin()
-        {
-        }
+        public ISAdmin() { }
+        public ISAdmin(string name, string sername) : base(name, sername) { }
 
         public override string DoWork()
         {
-            List<IMS> IMSMain = Responsibility.MainAdminIMS[this];
-            List<IMS> IMSReserve = Responsibility.ReserveAdminIMS[this];
+            List<IS> IMSMain = Responsibility.MainISAdmin[this];
+            List<IS> IMSReserve = Responsibility.ReserveISAdmin[this];
             string IMSs = "";
             foreach (var ms in IMSMain)
             { IMSs += ms.Name + "\n"; }
@@ -32,8 +29,8 @@ namespace Pet_Project
 
         public override double CalculateSalary()
         {
-            List<IMS> IMSMain = Responsibility.MainAdminIMS[this];
-            List<IMS> IMSReserve = Responsibility.ReserveAdminIMS[this];
+            List<IS> IMSMain = Responsibility.MainISAdmin[this];
+            List<IS> IMSReserve = Responsibility.ReserveISAdmin[this];
             double salary = 0;
             foreach (var ms in IMSMain)
             {

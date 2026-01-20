@@ -1,14 +1,23 @@
-﻿using System;
+﻿using Pet_Project.Data.HelpModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pet_Project
+namespace Pet_Project.Data.Models
 {
     internal class Manager : Worker
     {
+        // ВОПРОС не должен хранить рабочих здесь? Как будто логичнее засунуть в Responsibility
         public List<Worker> Workers = new List<Worker>(); // Подчиненные. Как сделать, чтобы подчиненные подчиненных тоже рассчитывались? Написал метод CalculateWorkers
+
+        public Manager() : base() { }
+        public Manager(string name, string sername) : base(name, sername) { }
+        public Manager(string name, string sername, Status status, JobTitle jobTitle) 
+            : base(name, sername, status, jobTitle) { }
+
+
 
         public override string DoWork()
         {

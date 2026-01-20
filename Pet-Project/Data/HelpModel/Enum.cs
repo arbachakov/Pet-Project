@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pet_Project
+namespace Pet_Project.Data.HelpModel
 {
     internal enum Status
     {

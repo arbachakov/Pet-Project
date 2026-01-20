@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pet_Project
+namespace Pet_Project.Data.Models
 {
     internal class ServerAdmin : Worker
     {
-        public ServerAdmin() : base() { }
+        public ServerAdmin(string name, string sername) : base(name, sername) { }
 
-        public List<IMS> IMSList { get; set; }
+        public List<IS> IMSList { get; set; }
 
         public override string DoWork()
         {

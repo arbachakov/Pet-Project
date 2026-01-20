@@ -5,10 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pet_Project
+namespace Pet_Project.Data.Models
 {
     internal class NETAdmin : Worker
     {
+        public NETAdmin() { }
+        public NETAdmin(string name, string sername) : base(name, sername) { }
+
         public override string DoWork()
         {
             return $"Я просто *что-то на сетевом*";
@@ -16,7 +19,7 @@ namespace Pet_Project
 
         public override double CalculateSalary()
         {
-            return IMS.ServerCount * 500;
+            return IS.ServerCount * 500;
         }
 
     }

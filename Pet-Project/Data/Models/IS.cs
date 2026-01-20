@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pet_Project
+namespace Pet_Project.Data.Models
 {
-    internal class IMS
+    internal class IS
     {
         public string Name { get; set; }
 

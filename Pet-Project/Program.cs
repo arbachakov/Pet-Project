@@ -1,11 +1,10 @@
-﻿
+﻿using Pet_Project.Data.HelpModel;
+using Pet_Project.Data.Models;
 
-using Pet_Project;
+IS SMZU = new IS { Name = "SMZU", SalaryCost = 80 };
+IS SRPG = new IS { Name = "SRPG", SalaryCost = 80 };
 
-IMS SMZU = new IMS { Name = "SMZU", SalaryCost = 80 };
-IMS SRPG = new IMS { Name = "SRPG", SalaryCost = 80 };
-
-IMSAdmin ArbachakovME = new() // Почему без пустого конструктора не работает создание объекта? Создание ведь производится не через конструктор, а инициализатор
+ISAdmin ArbachakovME = new() // Почему без пустого конструктора не работает создание объекта? Создание ведь производится не через конструктор, а инициализатор
 {
     Name = "Maxim",
     Sername = "Arbachakov",
@@ -13,7 +12,7 @@ IMSAdmin ArbachakovME = new() // Почему без пустого констр
     Status = Status.Working
 };
 
-IMSAdmin IvanovII = new IMSAdmin
+ISAdmin IvanovII = new ISAdmin
 {
     Name = "Ivan",
     Sername = "Ivanov",
@@ -41,3 +40,5 @@ Console.ReadLine();
 
 // ArbachakovME.Deconstruct = (out name, out sername);
 
+// TODO Сделать id
+// TODO Определить где как выстраиваются связи между объектами

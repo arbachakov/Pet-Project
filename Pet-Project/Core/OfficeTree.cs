@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Pet_Project.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pet_Project
+namespace Pet_Project.Core
 {
     internal class OfficeTree
     {
@@ -72,6 +73,7 @@ namespace Pet_Project
             }
             return null;
         } 
+
         public void PrintInOrder() 
         {
             if (_root == null) return;
@@ -79,6 +81,7 @@ namespace Pet_Project
 
         }
 
+        // ВОПРОС Нужно переделать, чтобы возвращал строку?
         private void PrintInOrderRecursive(Node node) // Как это работает.....
         {
             if (node == null) return;

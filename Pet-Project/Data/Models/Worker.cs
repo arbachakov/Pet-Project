@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Pet_Project.Data.HelpModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace Pet_Project
+namespace Pet_Project.Data.Models
 {
     internal abstract class Worker : IWorkable
     {
