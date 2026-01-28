@@ -13,8 +13,26 @@ namespace Pet_Project.Data.Repositories
         private OfficeTree _tree = new OfficeTree();
 
         public void AddWorker(Worker worker) => _tree.Add(worker);
-        public Worker GetWorker(int id) => _tree.FindById(id);
-        // TODO Реализовать вывод всех сотрудников
-        //public string PrintAllWorkers() => _tree.PrintInOrder();
+        public Worker GetWorkerById(int id) => _tree.GetWorkerById(id);
+        public List<Worker> GetAllWorkers() => _tree.GetAllWorkers();
+
+        public void ChangeWorkerNameById(int id, string newName)
+        {
+            Worker worker = _tree.GetWorkerById(id);
+
+            worker.Name = newName;
+        }
+        public void ChangeWorkerSernameById(int id, string newSername)
+        {
+            Worker worker = _tree.GetWorkerById(id);
+
+            worker.Sername = newSername;
+        }
+
+        public bool DeleteWorker(int id)
+        {
+            bool deleted = _tree.Remove(id);
+            return deleted;
+        }
     }
 }

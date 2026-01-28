@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Comment CommentText="Комментарий комментарий">
+    <Position X="7.601" Y="8.485" Height="0.75" Width="1.7" />
+  </Comment>
+  <Class Name="Pet_Project.Core.Services.IdGeneratorService">
+    <Position X="11.5" Y="11.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAABAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Services\IdGeneratorService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pet_Project.Core.Services.OfficeService">
+    <Position X="19.25" Y="8" Width="6" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAgAAAAAEAAABAAAAAAA=</HashCode>
+      <FileName>Core\Services\OfficeService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pet_Project.Core.Services.UIOperator">
+    <Position X="17.75" Y="1.75" Width="5.25" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAEAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Services\UIOperator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pet_Project.Core.Services.WorkerService">
+    <Position X="11.5" Y="8" Width="7.25" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAABACSAIAAAAAAAAAAAgAAAEAACAAgAAAAAAA=</HashCode>
+      <FileName>Core\Services\WorkerService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pet_Project.Core.OfficeTree">
+    <Position X="11.75" Y="0.75" Width="4.75" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="Pet_Project.Core.OfficeTree.Node" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Core\OfficeTree.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAQAIAAAAAABEAAAAAAAEAAAEAAAAAAAAA=</HashCode>
+      <FileName>Core\OfficeTree.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pet_Project.Data.HelpModel.Responsibility">
+    <Position X="3" Y="10.5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>ABAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\HelpModel\Responsibility.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pet_Project.Data.Models.OfficeStructure.Block">
+    <Position X="8.25" Y="0.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAACAAAAQAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Models\OfficeStructure\Block.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pet_Project.Data.Models.OfficeStructure.Department">
+    <Position X="8.25" Y="3" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAQAAAAABAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Data\Models\OfficeStructure\Department.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pet_Project.Data.Models.IS">
+    <Position X="0.5" Y="10.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgCAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Models\IS.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pet_Project.Data.Models.ISAdmin">
+    <Position X="2.75" Y="3.5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAABQAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Models\ISAdmin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pet_Project.Data.Models.Manager">
+    <Position X="2.75" Y="0.75" Width="5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABQAAAAAAAAAAAAAQAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Data\Models\Manager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pet_Project.Data.Models.NETAdmin">
+    <Position X="2.75" Y="8.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Models\NETAdmin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pet_Project.Data.Models.ServerAdmin">
+    <Position X="2.75" Y="6" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABQAAAAAAAAAAAAAAAAAAEAAgAAAAAAAAAA=</HashCode>
+      <FileName>Data\Models\ServerAdmin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pet_Project.Data.Models.Worker" Collapsed="true">
+    <Position X="0.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQCAEABQAgEAAAUAAAQQAAAAAAEBAAAAAAAAIAAA=</HashCode>
+      <FileName>Data\Models\Worker.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Pet_Project.Data.Repositories.OfficeRepository">
+    <Position X="19" Y="5.5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Data\Repositories\OfficeRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pet_Project.Data.Repositories.WorkerRespository">
+    <Position X="11.75" Y="4.75" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAACCAAIAAAAAAAAAAAgAAAEAAAAAAAACAAAA=</HashCode>
+      <FileName>Data\Repositories\WorkerRespository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pet_Project.UI.Menus.MainMenu">
+    <Position X="25.75" Y="5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>UI\Menus\MainMenu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pet_Project.UI.Menus.StaffMenu">
+    <Position X="25.5" Y="6.75" Width="4.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAADAAAAAAAAAAAAAAAAAAAAEQAAAAAAAAAAAA=</HashCode>
+      <FileName>UI\Menus\StaffMenu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Pet_Project.Data.HelpModel.IWorkable">
+    <Position X="0.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\HelpModel\IWorkable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Pet_Project.Data.HelpModel.Status">
+    <Position X="4.75" Y="13.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAACAAAAAAAAAAAAAAAAgAAIAAAAAAA=</HashCode>
+      <FileName>Data\HelpModel\Enum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Pet_Project.Data.HelpModel.JobTitle">
+    <Position X="2.5" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAABIAAAAAAAAAgAABAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\HelpModel\Enum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

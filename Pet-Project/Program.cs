@@ -1,44 +1,15 @@
-﻿using Pet_Project.Data.HelpModel;
-using Pet_Project.Data.Models;
+﻿using Pet_Project.Core.Services;
+using Pet_Project.Data.Repositories;
+using Pet_Project.UI.Menus;
 
-IS SMZU = new IS { Name = "SMZU", SalaryCost = 80 };
-IS SRPG = new IS { Name = "SRPG", SalaryCost = 80 };
+OfficeRepository officeRepository = new OfficeRepository();
+WorkerRespository workerRespository = new WorkerRespository();
 
-ISAdmin ArbachakovME = new() // Почему без пустого конструктора не работает создание объекта? Создание ведь производится не через конструктор, а инициализатор
-{
-    Name = "Maxim",
-    Sername = "Arbachakov",
-    JobTitle = JobTitle.LeadingSpecialist,
-    Status = Status.Working
-};
+IdGeneratorService idGeneratorService = new IdGeneratorService();
+OfficeService officeService = new OfficeService(officeRepository);
+WorkerService workerService = new WorkerService(workerRespository, idGeneratorService);
 
-ISAdmin IvanovII = new ISAdmin
-{
-    Name = "Ivan",
-    Sername = "Ivanov",
-    JobTitle = JobTitle.ChiefSpecialist,
-    Status = Status.Working
-};
+UIOperator uiOperator = new UIOperator(officeService, workerService);
 
-Manager PetrovPP = new Manager
-{
-    Name = "Petr",
-    Sername = "Petrov",
-    JobTitle = JobTitle.Manager,
-    Status = Status.Working
-};
+MainMenu.Show(uiOperator);
 
-PetrovPP.Workers.Add(ArbachakovME);
-PetrovPP.Workers.Add(IvanovII);
-
-ArbachakovME.DoWork();
-IvanovII.DoWork();
-PetrovPP.DoWork();
-Console.ReadLine();
-
-//string name; string sername;
-
-// ArbachakovME.Deconstruct = (out name, out sername);
-
-// TODO Сделать id
-// TODO Определить где как выстраиваются связи между объектами

@@ -50,7 +50,7 @@ namespace Pet_Project.Core
             }
         } 
 
-        public Worker FindById(int id) 
+        public Worker GetWorkerById(int id) 
         {
             Node currentNode = _root;
 
@@ -72,22 +72,75 @@ namespace Pet_Project.Core
                 }
             }
             return null;
-        } 
-
-        public void PrintInOrder() 
-        {
-            if (_root == null) return;
-            else { PrintInOrderRecursive(_root); }
-
         }
 
-        // ВОПРОС Нужно переделать, чтобы возвращал строку?
-        private void PrintInOrderRecursive(Node node) // Как это работает.....
+
+
+        public List<Worker> GetAllWorkers()
+        {
+            List<Worker> result = new List<Worker>();
+            CollectWorkersInOrder(_root, result);
+            return result;
+        }
+
+        private void CollectWorkersInOrder(Node node, List<Worker> result)
         {
             if (node == null) return;
-            PrintInOrderRecursive(node.Left);
-            Console.WriteLine(node.Worker.ID + " " + node.Worker.MainInfo);
-            PrintInOrderRecursive(node.Right);
+
+            // Рекурсивный обход "левый-узел-правый" (in-order)
+            CollectWorkersInOrder(node.Left, result);  // 1. Левые
+            result.Add(node.Worker);                    // 2. Текущий
+            CollectWorkersInOrder(node.Right, result); // 3. Правые
+        }
+
+        public bool Remove(int id)
+        {
+            // Рекурсивный поиск и удаление
+            _root = RemoveRecursive(_root, id, out bool removed);
+            return removed;
+        }
+
+
+        // РАЗОБРАТЬ
+        private Node RemoveRecursive(Node node, int id, out bool removed)
+        {
+            removed = false;
+            if (node == null) return null;
+
+            // Поиск узла
+            if (id < node.Worker.ID)
+                node.Left = RemoveRecursive(node.Left, id, out removed);
+            else if (id > node.Worker.ID)
+                node.Right = RemoveRecursive(node.Right, id, out removed);
+            else
+            {
+                // УЗЕЛ НАЙДЕН - УДАЛЯЕМ
+                removed = true;
+
+                // Случай 1: Нет потомков или один потомок
+                if (node.Left == null) return node.Right;
+                if (node.Right == null) return node.Left;
+
+                // Случай 2: Два потомка
+                // Находим минимальный в правом поддереве (преемника)
+                Node successor = FindMin(node.Right);
+
+                // Копируем данные преемника в текущий узел
+                node.Worker = successor.Worker;
+
+                // Рекурсивно удаляем преемника
+                node.Right = RemoveRecursive(node.Right, successor.Worker.ID, out _);
+            }
+
+            return node;
+        }
+
+        private Node FindMin(Node node)
+        {
+            // Самый левый узел — минимальный
+            while (node.Left != null)
+                node = node.Left;
+            return node;
         }
     }
 }

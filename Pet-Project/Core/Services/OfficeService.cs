@@ -13,21 +13,30 @@ namespace Pet_Project.Core.Services
     {
         public static OfficeRepository OfficeRepository;
 
+        private readonly OfficeRepository _officeRepository;
+
+        public OfficeService(OfficeRepository officeRepository)
+        {
+            _officeRepository = officeRepository;
+        }
 
         // TODO Добавить функции удаления, изменения блоков и Служб
 
-        public static void CreateBlock(string name)
+        // ВОПРОС Для каждой офисной единицы (блок и служба, возможно отделы) нужно создавать свой сервис?
+        // Типо БлокСервис, СлужбаСервис, ОтделСервис... По SOLID
+
+        public  void CreateBlock(string name)
         {
             Block block = new Block() { Name = name };
 
-            OfficeRepository.blocks.Add(block);
+            _officeRepository.blocks.Add(block);
         }
 
-        public static void CreateDepartment(string name)
+        public void CreateDepartment(string name)
         {
             Department department = new Department() {Name = name};
 
-            OfficeRepository.departments.Add(department);
+            _officeRepository.departments.Add(department);
         }
     }
 }

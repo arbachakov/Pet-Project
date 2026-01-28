@@ -22,6 +22,9 @@ namespace Pet_Project.Data.Models
                 "{IMSs}";
         }
 
+
+
+        // ВОПРОС Вынести это в отдельный класс?
         public override double CalculateSalary() // Со словом override происходит переинициализация метода
         {
             double salary = 0;
