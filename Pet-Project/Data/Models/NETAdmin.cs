@@ -17,6 +17,7 @@ namespace Pet_Project.Data.Models
             return $"Я просто *что-то на сетевом*";
         }
 
+        // TODO Убрать это
         public override double CalculateSalary()
         {
             return IS.ServerCount * 500;

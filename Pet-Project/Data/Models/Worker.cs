@@ -10,6 +10,8 @@ namespace Pet_Project.Data.Models
 {
     internal abstract class Worker : IWorkable
     {
+
+
         public int ID { get; set; }
 
         public static int MinAge = 18; // Статические поля

@@ -9,6 +9,7 @@ namespace Pet_Project.Data.Models
 {
     internal class Manager : Worker
     {
+        // TODO Убрать это в класс менеджемента
         // ВОПРОС не должен хранить рабочих здесь? Как будто логичнее засунуть в Responsibility
         public List<Worker> Workers = new List<Worker>(); // Подчиненные. Как сделать, чтобы подчиненные подчиненных тоже рассчитывались? Написал метод CalculateWorkers
 
@@ -29,6 +30,8 @@ namespace Pet_Project.Data.Models
             return $"Я начальствую над: \n {workers}";
         }
 
+
+        // TODO Убрать в отдельный класс
         public override double CalculateSalary()
         {
             switch (JobTitle)
@@ -44,6 +47,7 @@ namespace Pet_Project.Data.Models
             }
         }
 
+        // TODO Убрать это
         public void CalculateWorkers() // Рекурсия, вроде должна работать
         {
             foreach (Worker worker in this.Workers)

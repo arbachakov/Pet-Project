@@ -23,7 +23,7 @@ namespace Pet_Project.Data.Models
         }
 
 
-
+        // TODO Убрать это
         // ВОПРОС Вынести это в отдельный класс?
         public override double CalculateSalary() // Со словом override происходит переинициализация метода
         {

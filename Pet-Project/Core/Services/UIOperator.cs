@@ -24,6 +24,7 @@ namespace Pet_Project.Core.Services
         {
             switch (command)
             {
+                // TODO Переделать текстовые команды в ENUM
                 case "GET_WORKER_BY_ID":
                     {
                         return _workerService.GetWorkerById(id);

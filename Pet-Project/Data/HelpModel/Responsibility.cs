@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace Pet_Project.Data.HelpModel
 {
+
+    // TODO добавить менеджемент
     internal static class Responsibility
     {
-        public static Dictionary<ISAdmin, List<IS>> MainISAdmin; // Не сам додумался. Снова кринж(
+        public static Dictionary<ISAdmin, List<IS>> MainISAdmin;
         public static Dictionary<ISAdmin, List<IS>> ReserveISAdmin;
     }
 }

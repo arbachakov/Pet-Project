@@ -12,6 +12,8 @@ namespace Pet_Project.Data.Models
 
         public static int ServerCount { get; set; } = 4;
 
-        public int SalaryCost { get; set; } // Сколько платят за админство. Если бы в жизни так работало...(((
+
+        // TODO ПОдумать, что с этим делать
+        public int SalaryCost { get; set; } 
     }
 }

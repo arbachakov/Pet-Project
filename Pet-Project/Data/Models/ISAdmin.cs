@@ -26,7 +26,7 @@ namespace Pet_Project.Data.Models
         }
 
 
-        
+        // TODO Убрать это
         public override double CalculateSalary()
         {
             List<IS> IMSMain = Responsibility.MainISAdmin[this];
