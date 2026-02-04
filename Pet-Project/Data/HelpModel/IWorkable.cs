@@ -10,6 +10,7 @@ namespace Pet_Project.Data.HelpModel
     {
         public string DoWork();
 
+        public string Name { get; set; }
 
         // TODO Подумать, что с этим делать
         public double CalculateSalary();
