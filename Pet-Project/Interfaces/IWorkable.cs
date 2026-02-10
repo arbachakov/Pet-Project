@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pet_Project.Data.HelpModel
+namespace Pet_Project.Interface
 {
     internal interface IWorkable
     {
@@ -12,7 +12,6 @@ namespace Pet_Project.Data.HelpModel
 
         public string Name { get; set; }
 
-        // TODO Подумать, что с этим делать
-        public double CalculateSalary();
+
     }
 }

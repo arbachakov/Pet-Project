@@ -1,25 +1,73 @@
-﻿using Pet_Project.Core.Services;
-using Pet_Project.Data.Models;
-using Pet_Project.Data.Repositories;
-using Pet_Project.UI.Menus;
-
-OfficeRepository officeRepository = new OfficeRepository();
-WorkerRespository workerRespository = new WorkerRespository();
-
-IdGeneratorService idGeneratorService = new IdGeneratorService();
-OfficeService officeService = new OfficeService(officeRepository);
-WorkerService workerService = new WorkerService(workerRespository, idGeneratorService);
-
-UIOperator uiOperator = new UIOperator(officeService, workerService);
-
-MainMenu.Show(uiOperator);
+﻿
+using Pet_Project.Menus;
+using Pet_Project.Model.WorkerKindes;
+using Pet_Project.Models;
+using Pet_Project.Repositories;
+using Pet_Project.Services;
 
 
 // ВОПРОС Связь этих строчек с override и new
-Worker worker1 = new ServerAdmin("313", "3113");
+//Worker worker1 = new ServerAdmin("313", "3113");
 
-ServerAdmin worker2 = new ServerAdmin("313", "3113");
+//ServerAdmin worker2 = new ServerAdmin("313", "3113");
 
+WorkerRepository workerRepository = new WorkerRepository();
+BlockRepository blockRepository = new BlockRepository();
+DepartmentRepository departmentRepository = new DepartmentRepository();
+
+IdGeneratorService idGeneratorService = new IdGeneratorService();
+
+WorkerService workerService = new WorkerService(workerRepository, idGeneratorService);
+BlockService blockService = new BlockService(blockRepository, idGeneratorService);
+DepartmentService departmentService = new DepartmentService(departmentRepository, idGeneratorService);
+
+MenuConstructor mainMenu = new MenuConstructor();
+
+mainMenu.SetStartText("===Главное меню===");
+
+Action ViewOffice = OfficeView;
+Action Exit = ExitMenu;
+
+
+mainMenu.SetMenuLine(1, "Посмотреть офис", ViewOffice);
+
+mainMenu.SetMenuLine(9, "Выход", Exit);
+
+
+void OfficeView()
+{
+    Console.Clear();
+    Console.WriteLine(blockService.ViewAll());
+    Console.WriteLine(departmentService.ViewAll());
+    Console.WriteLine(workerService.ViewAll());
+    Console.WriteLine("Нажммите кнопку, чтобы вернуться...");
+    Console.ReadKey();
+}
+
+void BlockWork()
+{
+
+}
+
+void ExitMenu()
+{ Console.WriteLine("Выходим..."); }
+
+
+
+
+
+while (true)
+{
+    mainMenu.View();
+    int unput = int.Parse(Console.ReadLine());
+    mainMenu.RunByLine(unput);
+}
+
+
+
+
+
+// TODO Реализовать тип сотрудника как 
 
 /*
  
