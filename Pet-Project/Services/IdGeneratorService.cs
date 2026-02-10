@@ -15,12 +15,11 @@ namespace Pet_Project.Services
         public int GenerateID()
         {
             int id;
-            // TODO Пересмотреть логику...
             do
             {
                 id = _rnd.Next(0, 100000);
-                _staffIds.Add(id);
-            } while (_staffIds.Contains(id));
+            } while (_staffIds.Contains(id)); 
+            _staffIds.Add(id);
             return id;
         }
     }

@@ -8,34 +8,38 @@ using System.Threading.Tasks;
 
 namespace Pet_Project.Menu
 {
-    internal class MainMenu
+    internal class MainMenu : BaseMenu
     {
         private readonly BlockService _blockService;
         private readonly DepartmentService _departmentService;
         private readonly WorkerService _workerService;
+        private BlockMenu _blockMenu; // ВОПРОС Почему здесь не могу присвоить?
+        private DepartmentMenu _departmentMenu;
+        private WorkerMenu _workerMenu;
 
         public MainMenu(BlockService blockService, DepartmentService departmentService, WorkerService workerService)
         {
             _blockService = blockService;
             _departmentService = departmentService;
             _workerService = workerService;
+            _blockMenu = new BlockMenu(blockService);
+            _departmentMenu = new DepartmentMenu(departmentService);
+            _workerMenu = new WorkerMenu(workerService);
+            CreateItems();
         }
 
 
-        private MenuConstructor menu = new MenuConstructor();
-
-        void Run()
+        public void CreateItems()
         {
-            menu.SetStartText("===Главное меню===");
-            Action ViewOfficeAction = ViewOffice;
-            Action ViewBlockAction = ViewBlockMenu;
-            Action ViewDepartmentAction = ViewDepartmentMenu;
-            Action ViewWorkerAction = ViewDepartmentMenu;
+            SetStartText("===Главное меню===");
+            AddItem("Посмотреть все", ViewOffice);
+            AddItem("Меню блоков", ViewBlockMenu);
+            AddItem("Меню отделов", ViewDepartmentMenu);
+            AddItem("Меню сотрудников", ViewWorkerMenu);
 
-            menu.SetMenuLine(1, "Посмотреть офис", ViewOfficeAction);
-            menu.SetMenuLine(2, "Поработать с блоками", ViewBlockAction);
-            menu.SetMenuLine(3, "Поработать с отделами", ViewDepartmentAction);
-            menu.SetMenuLine(4, "Поработать с рабочими", ViewWorkerAction);
+            _blockMenu.CreateItems();
+            _departmentMenu.CreateItems();
+            _workerMenu.CreateItems();
         }
 
         void ViewOffice()
@@ -50,17 +54,17 @@ namespace Pet_Project.Menu
 
         void ViewBlockMenu()
         {
-
+            _blockMenu.Run();
         }
 
         void ViewDepartmentMenu()
         {
-
+            _departmentMenu.Run();
         }
 
         void ViewWorkerMenu()
         {
-
+            _workerMenu.Run();
         }
     }
 }

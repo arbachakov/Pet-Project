@@ -28,7 +28,7 @@ namespace Pet_Project.Services
 
         public string ViewAll()
         {
-            string departmentsInfo = "";
+            string departmentsInfo = "Отделы:\n";
             List<Department> departments = GetAll();
             if (departments.Count == 0)
             { return "Отделов нет("; }

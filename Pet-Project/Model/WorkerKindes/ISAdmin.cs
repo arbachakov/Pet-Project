@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace Pet_Project.Model.WorkerKindes
 {
-    internal class ISAdmin : Worker
+    internal class ISAdmin
     {
         public ISAdmin() { }
-        public ISAdmin(string name, string sername) : base(name, sername) { }
+        //public ISAdmin(string name, string sername) : base(name, sername) { }
 
-        public override string DoWork()
+        public string DoWork()
         {
             List<IS> IMSMain = Responsibility.MainISAdmin[this];
             List<IS> IMSReserve = Responsibility.ReserveISAdmin[this];

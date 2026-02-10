@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Pet_Project.Model.WorkerKindes
 {
-    internal class Manager : Worker
+    internal class Manager
     {
 
 
         public Manager() : base() { }
-        public Manager(string name, string sername) : base(name, sername) { }
+        //public Manager(string name, string sername)
 
-        public override string DoWork()
+        public string DoWork()
         {
             return "Я начальник!";
         }

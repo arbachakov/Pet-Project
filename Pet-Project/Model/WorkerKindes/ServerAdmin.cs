@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Pet_Project.Model.WorkerKindes
 {
-    internal class ServerAdmin : Worker
+    internal class ServerAdmin
     {
-        public ServerAdmin(string name, string sername) : base(name, sername) { }
+        //public ServerAdmin(string name, string sername) : base(name, sername) { }
 
         public List<IS> IMSList { get; set; }
 
-        public override string DoWork()
+        public string DoWork()
         {
             string IMSs = "";
             foreach (var ms in IMSList)

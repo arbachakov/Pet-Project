@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace Pet_Project.Model.WorkerKindes
 {
-    internal class NETAdmin : Worker
+    internal class NETAdmin
     {
         public NETAdmin() { }
-        public NETAdmin(string name, string sername) : base(name, sername) { }
+        //public NETAdmin(string name, string sername) : base(name, sername) { }
 
-        public override string DoWork()
+        public string DoWork()
         {
             return $"Я сетевик!";
         }

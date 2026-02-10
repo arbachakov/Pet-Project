@@ -9,47 +9,40 @@ using System.Threading.Tasks;
 
 namespace Pet_Project.Menu
 {
-    internal class BlockMenu
+    internal class BlockMenu : BaseMenu
     {
 
-        private readonly BlockService _blockService;
+        private readonly BlockService _service;
 
         public BlockMenu(BlockService blockService)
         {
-            _blockService = blockService;
+            _service = blockService;
         }
 
-        MenuConstructor menu = new MenuConstructor();
 
-        void Run()
+        public void CreateItems()
         {
-            menu.SetStartText("===Блоки===\n" +
-                _blockService.ViewAll());
-
-            Action CreateBlockAction = CreateBlock;
-            Action ChangeBlockAction = ChangeBlock;
-            Action DeleteBlocktAction = DeleteBlock;
-            Action ExitAction = Exit;
-
-
-            menu.SetMenuLine(1, "Создать блок", CreateBlockAction);
-            menu.SetMenuLine(2, "Изменить блок", ChangeBlockAction);
-            menu.SetMenuLine(3, "Удалить блок", DeleteBlocktAction);
-            menu.SetMenuLine(4, "Назад", ExitAction);
+            SetStartText("===Меню блоков===\n" +
+                _service.ViewAll());
+            AddItem("Создать блок", Create);
+            AddItem("Изменить блок", Change);
+            AddItem("Удалить блок", Delete);
         }
 
-        void CreateBlock()
+
+        void Create()
         {
             Console.WriteLine("Введите имя блока");
 
             string name = Console.ReadLine();
             
-            _blockService.Create(name);
+            _service.Create(name);
 
             Console.WriteLine($"Блок {name} успешно создан!");
+            Console.ReadKey();
         }
 
-        void ChangeBlock()
+        void Change()
         {
             Console.WriteLine("Какой блок вы хотите изменить?");
 
@@ -61,10 +54,13 @@ namespace Pet_Project.Menu
 
             string newName = Console.ReadLine();
 
-            _blockService.ChangeNameById(id, newName);
+            _service.ChangeNameById(id, newName);
+
+            Console.WriteLine("Блок переименован");
+            Console.ReadKey();
         }
 
-        void DeleteBlock()
+        void Delete()
         {
             Console.WriteLine("Какой блок вы хотите удалить?");
 
@@ -72,19 +68,10 @@ namespace Pet_Project.Menu
 
             bool isNumber = int.TryParse(inputNumber, out int id);
 
-            _blockService.DeleteById(id);
+            _service.DeleteById(id);
 
-            Console.WriteLine("Введите новое имя блока");
-
-            string newName = Console.ReadLine();
-
-            _blockService.ChangeNameById(id, newName);
-        }
-
-        void Exit()
-        {
-            Console.WriteLine("Выходим в главное меню");
-
+            Console.WriteLine("Блок удален!");
+            Console.ReadKey();
         }
 
     }

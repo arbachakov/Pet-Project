@@ -31,7 +31,7 @@ namespace Pet_Project.Services
 
         public string ViewAll()
         {
-            string blocksInfo = "";
+            string blocksInfo = "Блоки:\n";
             List<Block> blocks = GetAll();
             if (blocks.Count == 0)
             { return "Блоков нет("; }

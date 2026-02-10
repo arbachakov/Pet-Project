@@ -31,7 +31,7 @@ namespace Pet_Project.Services
 
         public string ViewAll()
         {
-            string workersInfo = "";
+            string workersInfo = "Сотрудники:\n";
             List<Worker> workers = GetAll();
             if (workers.Count == 0)
             { return "Рабочих нет("; }

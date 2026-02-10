@@ -1,4 +1,5 @@
 ﻿
+using Pet_Project.Menu;
 using Pet_Project.Menus;
 using Pet_Project.Model.WorkerKindes;
 using Pet_Project.Models;
@@ -21,47 +22,14 @@ WorkerService workerService = new WorkerService(workerRepository, idGeneratorSer
 BlockService blockService = new BlockService(blockRepository, idGeneratorService);
 DepartmentService departmentService = new DepartmentService(departmentRepository, idGeneratorService);
 
-MenuConstructor mainMenu = new MenuConstructor();
-
-mainMenu.SetStartText("===Главное меню===");
-
-Action ViewOffice = OfficeView;
-Action Exit = ExitMenu;
+MainMenu mainMenu = new(blockService, departmentService, workerService);
 
 
-mainMenu.SetMenuLine(1, "Посмотреть офис", ViewOffice);
+//mainMenu.CreateItems();
 
-mainMenu.SetMenuLine(9, "Выход", Exit);
-
-
-void OfficeView()
-{
-    Console.Clear();
-    Console.WriteLine(blockService.ViewAll());
-    Console.WriteLine(departmentService.ViewAll());
-    Console.WriteLine(workerService.ViewAll());
-    Console.WriteLine("Нажммите кнопку, чтобы вернуться...");
-    Console.ReadKey();
-}
-
-void BlockWork()
-{
-
-}
-
-void ExitMenu()
-{ Console.WriteLine("Выходим..."); }
+mainMenu.Run();
 
 
-
-
-
-while (true)
-{
-    mainMenu.View();
-    int unput = int.Parse(Console.ReadLine());
-    mainMenu.RunByLine(unput);
-}
 
 
 
