@@ -13,18 +13,6 @@ namespace Pet_Project.Model.WorkerKindes
         public ISAdmin() { }
         //public ISAdmin(string name, string sername) : base(name, sername) { }
 
-        public string DoWork()
-        {
-            List<IS> IMSMain = Responsibility.MainISAdmin[this];
-            List<IS> IMSReserve = Responsibility.ReserveISAdmin[this];
-            string IMSs = "";
-            foreach (var ms in IMSMain)
-            { IMSs += ms.Name + "\n"; }
-            foreach (var ms in IMSReserve)
-            { IMSs += ms.Name + "\n"; }
-            return $"Я итак админю это нерабочее #&?!(%:" +
-                "{IMSs}";
-        }
 
     }
 }

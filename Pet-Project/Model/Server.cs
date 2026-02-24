@@ -4,18 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pet_Project.Models
+namespace Pet_Project.Model
 {
-    internal class IS
+    internal class Server
     {
-        public IS(string name)
+        public Server(string name)
         {
             Name = name;
         }
 
         public int Id { get; set; }
-
         public string Name { get; set; }
-
     }
 }

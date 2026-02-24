@@ -12,7 +12,6 @@ namespace Pet_Project.Model.WorkerKindes
 
 
         public Manager() : base() { }
-        //public Manager(string name, string sername)
 
         public string DoWork()
         {
