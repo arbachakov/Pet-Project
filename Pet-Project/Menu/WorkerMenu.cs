@@ -1,4 +1,6 @@
 ﻿using Pet_Project.Menus;
+using Pet_Project.Models;
+using Pet_Project.Pattern;
 using Pet_Project.Services;
 using System;
 using System.Collections.Generic;
@@ -19,10 +21,31 @@ namespace Pet_Project.Menu
         }
 
 
-        public void CreateItems()
+        string GetWorkersInfo()
         {
-            SetStartText("===Меню Сотрудников===\n" +
-                _service.ViewAll());
+            Result<List<Worker>> resultWorrkers = _service.GetAll();
+
+            if (resultWorrkers.Success)
+            {
+                List<Worker> workers = resultWorrkers.Data;
+
+                string workersInfo = "Сотрудники:\n";
+                for (int i = 0; i < workers.Count; i++)
+                {
+                    workersInfo += $"Имя: {workers[i].Name} Фамилия: {workers[i].Sername} Id: {workers[i].Id}\n";
+                }
+                return workersInfo;
+            }
+            else
+            {
+                return resultWorrkers.Message;
+            }
+        }
+
+        public void CreateItems()
+        { // TODO Подумать как переделать
+            SetStartText("===Меню Сотрудников===\n" + GetWorkersInfo());
+            
             AddItem("Создать сотрудника", Create);
             AddItem("Изменить сотрудника", Change);
             AddItem("Удалить сотрудника", Delete);

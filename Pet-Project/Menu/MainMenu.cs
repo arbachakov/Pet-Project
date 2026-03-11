@@ -1,4 +1,6 @@
 ﻿using Pet_Project.Menus;
+using Pet_Project.Models;
+using Pet_Project.Pattern;
 using Pet_Project.Services;
 using System;
 using System.Collections.Generic;
@@ -13,7 +15,7 @@ namespace Pet_Project.Menu
         private readonly BlockService _blockService;
         private readonly DepartmentService _departmentService;
         private readonly WorkerService _workerService;
-        private BlockMenu _blockMenu; // ВОПРОС Почему здесь не могу присвоить?
+        private BlockMenu _blockMenu;
         private DepartmentMenu _departmentMenu;
         private WorkerMenu _workerMenu;
 
@@ -47,7 +49,7 @@ namespace Pet_Project.Menu
             Console.Clear();
             Console.WriteLine(_blockService.ViewAll());
             Console.WriteLine(_departmentService.ViewAll());
-            Console.WriteLine(_workerService.ViewAll());
+            Console.WriteLine(GetWorkersInfo());
             Console.WriteLine("Нажммите кнопку, чтобы вернуться...");
             Console.ReadKey();
         }
@@ -65,6 +67,27 @@ namespace Pet_Project.Menu
         void ViewWorkerMenu()
         {
             _workerMenu.Run();
+        }
+
+        string GetWorkersInfo()
+        {
+            Result<List<Worker>> resultWorrkers = _workerService.GetAll();
+
+            if (resultWorrkers.Success)
+            {
+                List<Worker> workers = resultWorrkers.Data;
+
+                string workersInfo = "Сотрудники:\n";
+                for (int i = 0; i < workers.Count; i++)
+                {
+                    workersInfo += $"Имя: {workers[i].Name} Фамилия: {workers[i].Sername} Id: {workers[i].Id}\n";
+                }
+                return workersInfo;
+            }
+            else
+            {
+                return resultWorrkers.Message;
+            }
         }
     }
 }

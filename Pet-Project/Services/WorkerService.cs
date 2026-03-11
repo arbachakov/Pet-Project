@@ -1,6 +1,7 @@
 ﻿using Pet_Project.Interfaces;
 using Pet_Project.Model.WorkerKindes;
 using Pet_Project.Models;
+using Pet_Project.Pattern;
 using Pet_Project.Repositories;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Pet_Project.Services
 {
-    internal class WorkerService : IServicable<Worker>
+    internal class WorkerService //: IServicable<Worker>
     {
         private readonly WorkerRepository _repository;
         private readonly IdGeneratorService _idGeneratorService;
@@ -24,57 +25,93 @@ namespace Pet_Project.Services
             _idGeneratorService = idGeneratorService;
         }
 
-        public List<Worker> GetAll()
+        public Result<List<Worker>> GetAll()
         {
-            return _repository.GetAll();
-        }
+            Result<List<Worker>> resultWorker = _repository.GetAll();
 
-        public string ViewAll()
-        {
-            string workersInfo = "Сотрудники:\n";
-            List<Worker> workers = GetAll();
-            if (workers.Count == 0)
-            { return "Рабочих нет("; }
-            for (int i = 0; i < workers.Count; i++)
+            if (resultWorker.Success)
             {
-                workersInfo += $"Имя: {workers[i].Name} Фамилия: {workers[i].Sername} Id: {workers[i].Id}\n";
+                return Result<List<Worker>>.Ok(resultWorker.Data, resultWorker.Message);
             }
-            return workersInfo;
+            else
+            {
+                return Result<List<Worker>>.Fail(resultWorker.Message);
+            }
         }
 
-        public bool ChangeNameById(int id, string newName)
+
+        public Result<Worker> ChangeNameById(int id, string newName)
         {
-            if (_repository.ChangeNameById(id, newName))
-            { return true; }
-            return false;         
+            Result<Worker> resultWorker = _repository.ChangeNameById(id, newName);
+
+            if (resultWorker.Success)
+            {
+                return Result<Worker>.Ok(resultWorker.Data, resultWorker.Message);
+            }
+            else 
+            {
+                return Result<Worker>.Fail(resultWorker.Message);
+            }
 
         }
 
-        public bool ChangeSernameById(int id, string newSername)
+        public Result<Worker> ChangeSernameById(int id, string newSername)
         {
-            if(_repository.ChangeSernameById(id, newSername)) 
-            { return true; }
-            return false;
+            Result<Worker> resultWorker = _repository.ChangeNameById(id, newSername);
+
+            if (resultWorker.Success)
+            {
+                return Result<Worker>.Ok(resultWorker.Data, resultWorker.Message);
+            }
+            else 
+            {
+                return Result<Worker>.Fail(resultWorker.Message);
+            }
         }
 
-        public bool DeleteById(int id)
+        public Result<Worker> DeleteById(int id)
         {
-            if (_repository.DeleteById(id))
-            { return true; }
-            return false;
+            Result<Worker> resultWorker = _repository.DeleteById(id);
+
+            if (resultWorker.Success)
+            {
+                return Result<Worker>.Ok(resultWorker.Data, resultWorker.Message);
+            }
+            else
+            {
+                return Result<Worker>.Fail(resultWorker.Message);
+            }
         }
 
-        public Worker GetById(int id)
+        public Result<Worker> GetById(int id)
         {
-            return _repository.GetById(id);
+            Result<Worker> resultWorker = _repository.GetById(id);
+
+            if (resultWorker.Success)
+            {
+                return Result<Worker>.Ok(resultWorker.Data, resultWorker.Message);
+            }
+            else
+            {
+                return Result<Worker>.Fail(resultWorker.Message);
+            }
         }
 
-        public Worker Create(string name)
+        public Result<Worker> Create(string name)
         {
             Worker worker = new Worker(name);
             worker.Id = _idGeneratorService.GenerateID();
-            _repository.Add(worker);
-            return worker;
+
+            Result<Worker> resultWorker = _repository.Add(worker);
+
+            if (resultWorker.Success)
+            {
+                return Result<Worker>.Ok(resultWorker.Data, resultWorker.Message);
+            }
+            else
+            {
+                return Result<Worker>.Fail(resultWorker.Message);
+            }
         }
 
     }

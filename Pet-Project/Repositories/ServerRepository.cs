@@ -36,10 +36,10 @@ namespace Pet_Project.Repositories
 
         public bool ChangeNameById(int id, string newName)
         {
-            IS IS = GetById(id);
-            if (IS != null)
+            Server server = GetById(id);
+            if (server != null)
             {
-                IS.Name = newName;
+                server.Name = newName;
                 return true;
             }
             return false;
@@ -47,10 +47,10 @@ namespace Pet_Project.Repositories
 
         public bool DeleteById(int id)
         {
-            IS IS = GetById(id);
-            if (IS != null)
+            Server server = GetById(id);
+            if (server != null)
             {
-                _servers.Remove(IS);
+                _servers.Remove(server);
                 return true;
             }
             return false;
