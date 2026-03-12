@@ -2,6 +2,7 @@
 using Pet_Project.Model.WorkerKindes;
 using Pet_Project.Models;
 using Pet_Project.Pattern;
+using Pet_Project.Registries;
 using Pet_Project.Repositories;
 using System;
 using System.Collections.Generic;
@@ -17,14 +18,17 @@ namespace Pet_Project.Services
     {
         private readonly WorkerRepository _repository;
         private readonly IdGeneratorService _idGeneratorService;
+        private readonly ManagementRegistry _registry;
 
         public WorkerService(WorkerRepository workerRespository, 
-            IdGeneratorService idGeneratorService)
+            IdGeneratorService idGeneratorService, ManagementRegistry registry)
         {
             _repository = workerRespository;
             _idGeneratorService = idGeneratorService;
+            _registry = registry;
         }
 
+        #region Repository
         public Result<List<Worker>> GetAll()
         {
             Result<List<Worker>> resultWorker = _repository.GetAll();
@@ -113,6 +117,46 @@ namespace Pet_Project.Services
                 return Result<Worker>.Fail(resultWorker.Message);
             }
         }
+        #endregion Repository
 
+        #region Registy
+
+        public Result<Dictionary<Worker, Worker>> GetWorkerDict()
+        {
+            return _registry.GetWorkerDict();
+        }
+
+        public Result<Worker> AddRelation(Worker manager, Worker worker)
+        {
+            Result<Worker> resultWorker = _registry.AddRelation(manager, worker);
+
+            // ВОПРОС Наверно стоит подумать
+            if (resultWorker.Success)
+            {
+                return resultWorker;
+            }
+            else
+            {
+                return resultWorker;
+            }
+        }
+
+
+        public Result<Worker> RemoveRelation(Worker manager, Worker worker)
+        {
+            Result<Worker> resultWorker = _registry.RemoveRelation(manager, worker);
+
+            // ВОПРОС Наверно стоит подумать
+            if (resultWorker.Success)
+            {
+                return resultWorker;
+            }
+            else
+            {
+                return resultWorker;
+            }
+        }
+
+        #endregion Registry
     }
 }

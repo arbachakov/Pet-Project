@@ -50,6 +50,7 @@ namespace Pet_Project.Menu
             Console.WriteLine(_blockService.ViewAll());
             Console.WriteLine(_departmentService.ViewAll());
             Console.WriteLine(GetWorkersInfo());
+            Console.WriteLine(GetManagementInfo);
             Console.WriteLine("Нажммите кнопку, чтобы вернуться...");
             Console.ReadKey();
         }
@@ -68,7 +69,7 @@ namespace Pet_Project.Menu
         {
             _workerMenu.Run();
         }
-
+        // TODO исключить дублирование с WorkerMenu
         string GetWorkersInfo()
         {
             Result<List<Worker>> resultWorrkers = _workerService.GetAll();
@@ -88,6 +89,38 @@ namespace Pet_Project.Menu
             {
                 return resultWorrkers.Message;
             }
+        }
+
+        // TODO исключить дублирование с WorkerMenu
+        string GetManagementInfo()
+        {
+            Result<Dictionary<Worker, Worker>> resultDict = _workerService.GetWorkerDict();
+
+            if (resultDict.Success)
+            {
+                Dictionary<Worker, Worker> workersDict = resultDict.Data;
+
+                if (workersDict.Count == 0)
+                {
+                    return "Нет связей для установки начальства";
+                }
+                else
+                {
+                    string managementInfo = "";
+
+                    foreach (var item in workersDict)
+                    {
+                        managementInfo += item.Key.Name + "руководит" + item.Value + "\n";
+                        return managementInfo;
+                    }
+                }
+            }
+            else
+            {
+                return resultDict.Message;
+            }
+
+            return resultDict.Message;
         }
     }
 }

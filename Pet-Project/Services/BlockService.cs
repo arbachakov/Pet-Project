@@ -1,14 +1,6 @@
 ﻿using Pet_Project.Interfaces;
-using Pet_Project.Model.WorkerKindes;
-using Pet_Project.Models;
 using Pet_Project.Models.OfficeStructure;
 using Pet_Project.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Pet_Project.Services
 {

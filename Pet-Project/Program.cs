@@ -5,6 +5,7 @@ using Pet_Project.Model.WorkerKindes;
 using Pet_Project.Models;
 using Pet_Project.Repositories;
 using Pet_Project.Services;
+using Pet_Project.Registries;
 
 
 // ВОПРОС Связь этих строчек с override и new
@@ -17,10 +18,11 @@ BlockRepository blockRepository = new BlockRepository();
 DepartmentRepository departmentRepository = new DepartmentRepository();
 
 IdGeneratorService idGeneratorService = new IdGeneratorService();
-
-WorkerService workerService = new WorkerService(workerRepository, idGeneratorService);
+ManagementRegistry managementRegistry = new ManagementRegistry(workerRepository);
+WorkerService workerService = new WorkerService(workerRepository, idGeneratorService, managementRegistry);
 BlockService blockService = new BlockService(blockRepository, idGeneratorService);
 DepartmentService departmentService = new DepartmentService(departmentRepository, idGeneratorService);
+
 
 MainMenu mainMenu = new(blockService, departmentService, workerService);
 
@@ -36,7 +38,7 @@ mainMenu.Run();
 
 
 // TODO Реализовать тип сотрудника как роль
-// TODO Реализовать проверку меню
+// TODO Реализовать проверку меню (Забыл, что это значит)
 
 /*
  
@@ -52,10 +54,6 @@ mainMenu.Run();
 
 *** ПРАКТИКА ***
 
-Реализовать CRUD для офисной структуры
-
 Реализовать реализовать обязанности админов и менеджеров
-
-Добавить интерфейсы для сервисов/репозиториев, подумать, как заменить классы на интерфейсы
 
 */

@@ -16,8 +16,8 @@ namespace Pet_Project.Pattern
         private Result(bool success, string message, T data = default)
         {
             Success = success;
-            Message = message;
             Data = data;
+            Message = message;
         }
 
         public static Result<T> Ok(T data, string message = "")

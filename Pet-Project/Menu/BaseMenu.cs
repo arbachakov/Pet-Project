@@ -47,7 +47,7 @@ namespace Pet_Project.Menus
                 }
                 Console.WriteLine("0. Выход");
 
-                int choice = GetInputNumber();
+                int choice = GetInputNumberMenu();
 
                 if(choice == 0)
                     break;
@@ -58,7 +58,54 @@ namespace Pet_Project.Menus
             }
         }
 
-        private int GetInputNumber()
+        protected int GetInputNumberMenu()
+        {
+            while (true)
+            {
+                Console.WriteLine("Введите число:");
+
+                int input = GetInputNumber();
+
+                if (input < 0 || input > _items.Count)
+                {
+                    Console.WriteLine($"Введено некорректное число! " +
+                        $"Используйте числа от 1 до {_items.Count} или 0");
+                    continue;
+                }
+
+                return input;
+            }
+        }
+
+
+        //private int GetInputNumberMenu()
+        //{
+        //    while (true)
+        //    {
+        //        Console.WriteLine("Введите число:");
+
+        //        string input = Console.ReadLine();
+
+        //        bool isNumber = int.TryParse(input, out int choice);
+
+        //        if (!isNumber)
+        //        {
+        //            Console.WriteLine("Введено не число! Попробуем заново");
+        //            continue;
+        //        }
+
+        //        if (choice < 0 || choice > _items.Count)
+        //        {
+        //            Console.WriteLine($"Введено некорректное число! " +
+        //                $"Используйте числа от 1 до {_items.Count} или 0");
+        //            continue;
+        //        }
+
+        //        return choice;
+        //    }
+        //}
+
+        protected int GetInputNumber()
         {
             while (true)
             {
@@ -73,17 +120,8 @@ namespace Pet_Project.Menus
                     Console.WriteLine("Введено не число! Попробуем заново");
                     continue;
                 }
-
-                if (choice < 0 || choice > _items.Count)
-                {
-                    Console.WriteLine($"Введено некорректное число! " +
-                        $"Используйте числа от 1 до {_items.Count} или 0");
-                    continue;
-                }
-
                 return choice;
             }
         }
-
     }
 }
