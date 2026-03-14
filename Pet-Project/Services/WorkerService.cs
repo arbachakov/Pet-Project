@@ -1,20 +1,12 @@
 ﻿using Pet_Project.Interfaces;
-using Pet_Project.Model.WorkerKindes;
 using Pet_Project.Models;
 using Pet_Project.Pattern;
 using Pet_Project.Registries;
 using Pet_Project.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Pet_Project.Services
 {
-    internal class WorkerService //: IServicable<Worker>
+    internal class WorkerService : IServicable<Worker>
     {
         private readonly WorkerRepository _repository;
         private readonly IdGeneratorService _idGeneratorService;
@@ -42,6 +34,62 @@ namespace Pet_Project.Services
                 return Result<List<Worker>>.Fail(resultWorker.Message);
             }
         }
+
+        public Result<string> GetInfo()
+        {
+            Result<List<Worker>> result = _repository.GetAll();
+
+            if (result.Success)
+            {
+                List<Worker> workers = result.Data;
+
+                string info = "Сотрудники:\n";
+
+                if (workers.Count == 0)
+                {
+                    return Result<string>.Ok("Рабочих нет.", "Информация составлена");
+                }
+
+                for (int i = 0; i < workers.Count; i++)
+                {
+                    info += $"Имя: {workers[i].Name} Фамилия: {workers[i].Sername} Id: {workers[i].Id}\n";
+                }
+                return Result<string>.Ok(info, "Информация составлена");
+            }
+            else
+            {
+                return Result<string>.Fail(result.Message);
+            }
+        }
+
+        //public Result<string> GetManagementInfo()
+        //{
+        //    Result<Dictionary<Worker, Worker>> resultDict = _registry.GetWorkerDict();
+
+        //    if (resultDict.Success)
+        //    {
+        //        Dictionary<Worker, Worker> workersDict = resultDict.Data;
+
+        //        if (workersDict.Count == 0)
+        //        {
+        //            return Result<string>.Ok("Нет связей для установки начальства", "Нет связей");
+        //        }
+        //        else
+        //        {
+        //            string managementInfo = "";
+
+        //            foreach (var item in workersDict)
+        //            {
+        //                managementInfo += item.Key.Name + "руководит" + item.Value + "\n";
+        //                return Result<string>.Ok(managementInfo, "Список составлен");
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return Result<string>.Fail(resultDict.Message);
+        //    }
+        //}
 
 
         public Result<Worker> ChangeNameById(int id, string newName)

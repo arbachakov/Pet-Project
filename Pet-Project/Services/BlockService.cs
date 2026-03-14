@@ -1,65 +1,123 @@
 ﻿using Pet_Project.Interfaces;
 using Pet_Project.Models.OfficeStructure;
+using Pet_Project.Pattern;
 using Pet_Project.Repositories;
 
 namespace Pet_Project.Services
 {
     internal class BlockService : IServicable<Block>
     {
-        private readonly BlockRepository _blockRepository;
+        private readonly BlockRepository _repository;
         private readonly IdGeneratorService _idGeneratorService;
 
         public BlockService(BlockRepository blockRepository,
             IdGeneratorService idGeneratorService)
         {
-            _blockRepository = blockRepository;
+            _repository = blockRepository;
             _idGeneratorService = idGeneratorService;
         }
 
-        public List<Block> GetAll()
+        #region Repository
+        public Result<List<Block>> GetAll()
         {
-            return _blockRepository.GetAll();
-        }
+            Result<List<Block>> resultBlock = _repository.GetAll();
 
-        public string ViewAll()
-        {
-            string blocksInfo = "Блоки:\n";
-            List<Block> blocks = GetAll();
-            if (blocks.Count == 0)
-            { return "Блоков нет("; }
-            for (int i = 0; i < blocks.Count; i++)
+            if (resultBlock.Success)
             {
-                blocksInfo += $"Название: {blocks[i].Name} Id: {blocks[i].Id}\n";
+                return Result<List<Block>>.Ok(resultBlock.Data, resultBlock.Message);
             }
-            return blocksInfo;
+            else
+            {
+                return Result<List<Block>>.Fail(resultBlock.Message);
+            }
         }
 
-        public bool ChangeNameById(int id, string newName)
+        public Result<string> GetInfo()
         {
-            if (_blockRepository.ChangeNameById(id, newName))
-            { return true; }
-            return false;
+            Result<List<Block>> result = _repository.GetAll();
 
+            if (result.Success)
+            {
+                List<Block> bloks = result.Data;
+
+                string info = "Блоки:\n";
+
+                if (bloks.Count == 0)
+                {
+                    return Result<string>.Ok("Блоков нет.", "Информация составлена");
+                }
+
+                for (int i = 0; i < bloks.Count; i++)
+                {
+                    info += $"Имя: {bloks[i].Name} Id: {bloks[i].Id}\n";
+                }
+                return Result<string>.Ok(info, "Информация составлена");
+            }
+            else
+            {
+                return Result<string>.Fail(result.Message);
+            }
         }
 
-        public Block GetById(int id)
+        public Result<Block> ChangeNameById(int id, string newName)
         {
-            return _blockRepository.GetById(id);
+            Result<Block> resultBlock = _repository.ChangeNameById(id, newName);
+
+            if (resultBlock.Success)
+            {
+                return Result<Block>.Ok(resultBlock.Data, resultBlock.Message);
+            }
+            else
+            {
+                return Result<Block>.Fail(resultBlock.Message);
+            }
+
         }
 
-        public Block Create(string name)
+        public Result<Block> DeleteById(int id)
+        {
+            Result<Block> resultBlock = _repository.DeleteById(id);
+
+            if (resultBlock.Success)
+            {
+                return Result<Block>.Ok(resultBlock.Data, resultBlock.Message);
+            }
+            else
+            {
+                return Result<Block>.Fail(resultBlock.Message);
+            }
+        }
+
+        public Result<Block> GetById(int id)
+        {
+            Result<Block> resultBlock = _repository.GetById(id);
+
+            if (resultBlock.Success)
+            {
+                return Result<Block>.Ok(resultBlock.Data, resultBlock.Message);
+            }
+            else
+            {
+                return Result<Block>.Fail(resultBlock.Message);
+            }
+        }
+
+        public Result<Block> Create(string name)
         {
             Block block = new Block(name);
             block.Id = _idGeneratorService.GenerateID();
-            _blockRepository.Add(block);
-            return block;
-        }
 
-        public bool DeleteById(int id)
-        {
-            if (_blockRepository.DeleteById(id))
-            { return true; }
-            return false;
+            Result<Block> resultBlock = _repository.Add(block);
+
+            if (resultBlock.Success)
+            {
+                return Result<Block>.Ok(resultBlock.Data, resultBlock.Message);
+            }
+            else
+            {
+                return Result<Block>.Fail(resultBlock.Message);
+            }
         }
+        #endregion Repository
     }
 }

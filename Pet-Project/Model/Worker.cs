@@ -1,12 +1,4 @@
-﻿using Pet_Project.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-
-namespace Pet_Project.Models
+﻿namespace Pet_Project.Models
 {
     internal class Worker 
     {

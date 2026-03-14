@@ -33,11 +33,15 @@ namespace Pet_Project.Menus
             _items.Add(menuItem);
         }
 
+        abstract protected void UpdateStartText();
+
         public void Run()
         {
             while (true)
             {
                 Console.Clear();
+
+                UpdateStartText();
 
                 Console.WriteLine(_startText);
 
@@ -53,8 +57,6 @@ namespace Pet_Project.Menus
                     break;
 
                 _items[choice - 1].Action.Invoke();
-
-                
             }
         }
 
@@ -62,8 +64,6 @@ namespace Pet_Project.Menus
         {
             while (true)
             {
-                Console.WriteLine("Введите число:");
-
                 int input = GetInputNumber();
 
                 if (input < 0 || input > _items.Count)
@@ -76,34 +76,6 @@ namespace Pet_Project.Menus
                 return input;
             }
         }
-
-
-        //private int GetInputNumberMenu()
-        //{
-        //    while (true)
-        //    {
-        //        Console.WriteLine("Введите число:");
-
-        //        string input = Console.ReadLine();
-
-        //        bool isNumber = int.TryParse(input, out int choice);
-
-        //        if (!isNumber)
-        //        {
-        //            Console.WriteLine("Введено не число! Попробуем заново");
-        //            continue;
-        //        }
-
-        //        if (choice < 0 || choice > _items.Count)
-        //        {
-        //            Console.WriteLine($"Введено некорректное число! " +
-        //                $"Используйте числа от 1 до {_items.Count} или 0");
-        //            continue;
-        //        }
-
-        //        return choice;
-        //    }
-        //}
 
         protected int GetInputNumber()
         {

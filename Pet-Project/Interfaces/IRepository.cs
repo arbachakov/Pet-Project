@@ -1,21 +1,16 @@
-﻿using Pet_Project.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Pet_Project.Pattern;
 
 namespace Pet_Project.Interfaces
 {
     internal interface IRepository<T>
     {
-        public bool Add(T value);
+        public Result<T> Add(T value);
 
-        public T GetById(int id);
+        public Result<T> GetById(int id);
 
-        public bool ChangeNameById(int id, string newName);
+        public Result<T> ChangeNameById(int id, string newName);
 
-        public bool DeleteById(int id);
+        public Result<T> DeleteById(int id);
 
     }
 }

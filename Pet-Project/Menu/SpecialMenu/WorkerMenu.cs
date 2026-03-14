@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pet_Project.Menu
+namespace Pet_Project.Menu.SpecialMenu
 {
     internal class WorkerMenu : BaseMenu
     {
@@ -21,16 +21,20 @@ namespace Pet_Project.Menu
         }
 
         public void CreateItems()
-        { // TODO Настроить вызов после каждого вызова любого метода. Возможно перестроить BaseMenu
-            SetStartText("===Меню Сотрудников===\n" + 
-                GetWorkersInfo() + 
-                GetManagementInfo());
-            
+        {            
             AddItem("Создать сотрудника", Create);
             AddItem("Изменить сотрудника", Change);
             AddItem("Удалить сотрудника", Delete);
             AddItem("Добавить связи менеджемента", AddRelation);
             AddItem("Удалить связи менеджемента", RemoveRelation);
+        }
+
+        protected override void UpdateStartText()
+        {
+            SetStartText("=== Меню сотрудников ===" + "\n" +
+                (_service.GetInfo().Success ?
+                _service.GetInfo().Data :
+                _service.GetInfo().Message));
         }
 
 
@@ -55,9 +59,9 @@ namespace Pet_Project.Menu
 
             string newName = Console.ReadLine();
 
-            Result<Worker> resultWorker = _service.ChangeNameById(inputNumber, newName);
+            Result<Worker> result = _service.ChangeNameById(inputNumber, newName);
 
-            Console.WriteLine(resultWorker.Message);
+            Console.WriteLine(result.Message);
         }
 
         void Delete()
@@ -65,9 +69,9 @@ namespace Pet_Project.Menu
             Console.WriteLine("Какого сотрудника вы хотите удалить?");
 
             int inputNumber = GetInputNumber();
-            Result<Worker> resultWorker = _service.DeleteById(inputNumber);
+            Result<Worker> result = _service.DeleteById(inputNumber);
 
-            Console.WriteLine(resultWorker.Message);
+            Console.WriteLine(result.Message);
         }
 
         void AddRelation()
@@ -126,56 +130,6 @@ namespace Pet_Project.Menu
             }
         }
 
-        string GetWorkersInfo()
-        {
-            Result<List<Worker>> resultWorrkers = _service.GetAll();
 
-            if (resultWorrkers.Success)
-            {
-                List<Worker> workers = resultWorrkers.Data;
-
-                string workersInfo = "Сотрудники:\n";
-                for (int i = 0; i < workers.Count; i++)
-                {
-                    workersInfo += $"Имя: {workers[i].Name} Фамилия: {workers[i].Sername} Id: {workers[i].Id}\n";
-                }
-                return workersInfo;
-            }
-            else
-            {
-                return resultWorrkers.Message;
-            }
-        }
-
-        string GetManagementInfo()
-        {
-            Result<Dictionary<Worker, Worker>> resultDict = _service.GetWorkerDict();
-
-            if (resultDict.Success)
-            {
-                Dictionary<Worker, Worker> workersDict = resultDict.Data;
-
-                if (workersDict.Count == 0)
-                {
-                    return "Нет связей для установки начальства";
-                }
-                else
-                {
-                    string managementInfo = "";
-
-                    foreach (var item in workersDict)
-                    {
-                        managementInfo += item.Key.Name + "руководит" + item.Value + "\n";
-                        return managementInfo;
-                    }
-                }
-            }
-            else
-            {
-                return resultDict.Message;
-            }
-
-            return resultDict.Message;
-        }
     }
 }

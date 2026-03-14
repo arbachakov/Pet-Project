@@ -1,11 +1,7 @@
-﻿
-using Pet_Project.Menu;
-using Pet_Project.Menus;
-using Pet_Project.Model.WorkerKindes;
-using Pet_Project.Models;
-using Pet_Project.Repositories;
+﻿using Pet_Project.Repositories;
 using Pet_Project.Services;
 using Pet_Project.Registries;
+using Pet_Project.Menu;
 
 
 // ВОПРОС Связь этих строчек с override и new
@@ -19,6 +15,7 @@ DepartmentRepository departmentRepository = new DepartmentRepository();
 
 IdGeneratorService idGeneratorService = new IdGeneratorService();
 ManagementRegistry managementRegistry = new ManagementRegistry(workerRepository);
+
 WorkerService workerService = new WorkerService(workerRepository, idGeneratorService, managementRegistry);
 BlockService blockService = new BlockService(blockRepository, idGeneratorService);
 DepartmentService departmentService = new DepartmentService(departmentRepository, idGeneratorService);
@@ -36,7 +33,7 @@ mainMenu.Run();
 
 
 
-
+// ВОПРОС для классов модели использовать Интерфейс, для классов репозиториев, сервисов использовать обобщенные классы?
 // TODO Реализовать тип сотрудника как роль
 // TODO Реализовать проверку меню (Забыл, что это значит)
 

@@ -1,10 +1,6 @@
-﻿using Pet_Project.Models;
-using Pet_Project.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Pet_Project.Interfaces;
+using Pet_Project.Models;
+using Pet_Project.Pattern;
 
 namespace Pet_Project.Repositories
 {
@@ -12,48 +8,61 @@ namespace Pet_Project.Repositories
     {
         private List<IS> _iss = new List<IS>();
 
-        public List<IS> GetAll()
-        { return _iss; }
-
-        public bool Add(IS IS)
+        public Result<List<IS>> GetAll()
         {
-            _iss.Add(IS);
-            return true;
+            return Result<List<IS>>.Ok(_iss, "Список получен из репозитория");
+        }
+
+        public Result<IS> Add(IS iS)
+        {
+            _iss.Add(iS);
+            return Result<IS>.Ok(iS, $"Система {iS.Id} добавлена в репозиторий");
         }
 
 
-        public IS GetById(int id)
+        public Result<IS> GetById(int id)
         {
             for (int i = 0; i < _iss.Count; i++)
             {
                 if (_iss[i].Id == id)
-                    return _iss[i];
+                    return Result<IS>.Ok(_iss[i], $"Система {_iss[i].Id} найдена");
             }
-            return null;
+            return Result<IS>.Fail("Система не найдена в репозитории");
         }
 
 
-        public bool ChangeNameById(int id, string newName)
+        public Result<IS> ChangeNameById(int id, string newName)
         {
-            IS IS = GetById(id);
-            if (IS != null)
+            Result<IS> result = GetById(id);
+
+            if (result.Success)
             {
-                IS.Name = newName;
-                return true;
+                // ВОПРОС Возможно ошибка
+                IS iS = result.Data;
+                string oldName = iS.Name;
+                iS.Name = newName; // ВОПРОС Лучше сделать типы объектов через свойство, чтобы не менять сообщения...?
+                return Result<IS>.Ok(iS, $"У работника с id {iS.Id} изменено имя c {oldName} на {newName}");
             }
-            return false;
+            else
+            {
+                return Result<IS>.Fail(result.Message);
+            }
         }
 
-        public bool DeleteById(int id)
+        public Result<IS> DeleteById(int id)
         {
-            IS IS = GetById(id);
-            if (IS != null)
-            {
-                _iss.Remove(IS);
-                return true;
-            }
-            return false;
+            Result<IS> result = GetById(id);
 
+            if (result.Success)
+            {
+                IS iS = result.Data;
+                _iss.Remove(iS);
+                return Result<IS>.Ok(iS, $"Рабочий {iS.Id} удален"); ;
+            }
+            else
+            {
+                return Result<IS>.Fail(result.Message);
+            }
         }
     }
 }

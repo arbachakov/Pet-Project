@@ -1,11 +1,6 @@
 ﻿using Pet_Project.Interfaces;
 using Pet_Project.Model;
-using Pet_Project.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Pet_Project.Pattern;
 
 namespace Pet_Project.Repositories
 {
@@ -13,48 +8,61 @@ namespace Pet_Project.Repositories
     {
         private List<Server> _servers = new List<Server>();
 
-        public List<Server> GetAll()
-        { return _servers; }
+        public Result<List<Server>> GetAll()
+        { 
+            return Result<List<Server>>.Ok(_servers, "Список получен из репозитория"); 
+        }
 
-        public bool Add(Server server)
+        // TODO Добавить больше подробностей
+        public Result<Server> Add(Server server)
         {
             _servers.Add(server);
-            return true;
+            return Result<Server>.Ok(server, $"Сервер {server.Id} добавлен в репозиторий");
         }
 
 
-        public Server GetById(int id)
+        public Result<Server> GetById(int id)
         {
             for (int i = 0; i < _servers.Count; i++)
             {
                 if (_servers[i].Id == id)
-                    return _servers[i];
+                    return Result<Server>.Ok(_servers[i], $"Рабочий {_servers[i].Id} найден");
             }
-            return null;
+            return Result<Server>.Fail("Рабочий не найден в репозитории");
         }
 
 
-        public bool ChangeNameById(int id, string newName)
+        public Result<Server> ChangeNameById(int id, string newName)
         {
-            Server server = GetById(id);
-            if (server != null)
+            Result<Server> result = GetById(id);
+
+            if (result.Success)
             {
+                Server server = result.Data;
+                string oldName = server.Name;
                 server.Name = newName;
-                return true;
+                return Result<Server>.Ok(server, $"У работника с id {server.Id} изменено имя c {oldName} на {newName}");
             }
-            return false;
+            else
+            {
+                return Result<Server>.Fail(result.Message);
+            }
         }
 
-        public bool DeleteById(int id)
+        public Result<Server> DeleteById(int id)
         {
-            Server server = GetById(id);
-            if (server != null)
-            {
-                _servers.Remove(server);
-                return true;
-            }
-            return false;
+            Result<Server> result = GetById(id);
 
+            if (result.Success)
+            {
+                Server server= result.Data;
+                _servers.Remove(server);
+                return Result<Server>.Ok(server, $"Рабочий {server.Id} удален"); ;
+            }
+            else
+            {
+                return Result<Server>.Fail(result.Message);
+            }
         }
     }
 }

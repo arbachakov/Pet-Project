@@ -1,12 +1,7 @@
 ﻿using Pet_Project.Interfaces;
 using Pet_Project.Models;
-using Pet_Project.Models.OfficeStructure;
+using Pet_Project.Pattern;
 using Pet_Project.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Pet_Project.Services
 {
@@ -23,51 +18,123 @@ namespace Pet_Project.Services
             _idGeneratorService = idGeneratorService;
         }
 
-        public List<IS> GetAll()
+        #region Repository
+        public Result<List<IS>> GetAll()
         {
-            return _repository.GetAll();
-        }
+            Result<List<IS>> resultIS = _repository.GetAll();
 
-        public string ViewAll()
-        {
-            string blocksInfo = "Информационные системы:\n";
-            List<IS> ISS = GetAll();
-            if (ISS.Count == 0)
-            { return "ИС нет("; }
-            for (int i = 0; i < ISS.Count; i++)
+            if (resultIS.Success)
             {
-                blocksInfo += $"Название: {ISS[i].Name} Id: {ISS[i].Id}\n";
+                return Result<List<IS>>.Ok(resultIS.Data, resultIS.Message);
             }
-            return blocksInfo;
+            else
+            {
+                return Result<List<IS>>.Fail(resultIS.Message);
+            }
         }
 
-        public bool ChangeNameById(int id, string newName)
+        public Result<string> GetInfo()
         {
-            if (_repository.ChangeNameById(id, newName))
-            { return true; }
-            return false;
+            Result<List<IS>> result = _repository.GetAll();
 
+            if (result.Success)
+            {
+                List<IS> iSs = result.Data;
+
+                string info = "Инф системы:\n";
+
+                if (iSs.Count == 0)
+                {
+                    return Result<string>.Ok("Инф систем нет.", "Информация составлена");
+                }
+
+                for (int i = 0; i < iSs.Count; i++)
+                {
+                    info += $"Имя: {iSs[i].Name} Id: {iSs[i].Id}\n";
+                }
+                return Result<string>.Ok(info, "Информация составлена");
+            }
+            else
+            {
+                return Result<string>.Fail(result.Message);
+            } 
         }
 
-        public IS GetById(int id)
+
+
+        public Result<IS> ChangeNameById(int id, string newName)
         {
-            return _repository.GetById(id);
+            Result<IS> resultIS = _repository.ChangeNameById(id, newName);
+
+            if (resultIS.Success)
+            {
+                return Result<IS>.Ok(resultIS.Data, resultIS.Message);
+            }
+            else
+            {
+                return Result<IS>.Fail(resultIS.Message);
+            }
+
         }
 
-        public IS Create(string name)
+        public Result<IS> ChangeSernameById(int id, string newSername)
         {
-            IS IS = new IS(name);
-            IS.Id = _idGeneratorService.GenerateID();
-            _repository.Add(IS);
-            return IS;
+            Result<IS> resultIS = _repository.ChangeNameById(id, newSername);
+
+            if (resultIS.Success)
+            {
+                return Result<IS>.Ok(resultIS.Data, resultIS.Message);
+            }
+            else
+            {
+                return Result<IS>.Fail(resultIS.Message);
+            }
         }
 
-        public bool DeleteById(int id)
+        public Result<IS> DeleteById(int id)
         {
-            if (_repository.DeleteById(id))
-            { return true; }
-            return false;
+            Result<IS> resultIS = _repository.DeleteById(id);
+
+            if (resultIS.Success)
+            {
+                return Result<IS>.Ok(resultIS.Data, resultIS.Message);
+            }
+            else
+            {
+                return Result<IS>.Fail(resultIS.Message);
+            }
         }
 
+        public Result<IS> GetById(int id)
+        {
+            Result<IS> resultIS = _repository.GetById(id);
+
+            if (resultIS.Success)
+            {
+                return Result<IS>.Ok(resultIS.Data, resultIS.Message);
+            }
+            else
+            {
+                return Result<IS>.Fail(resultIS.Message);
+            }
+        }
+
+        public Result<IS> Create(string name)
+        {
+            IS iS = new IS(name);
+            iS.Id = _idGeneratorService.GenerateID();
+
+            Result<IS> resultIS = _repository.Add(iS);
+
+            if (resultIS.Success)
+            {
+                return Result<IS>.Ok(resultIS.Data, resultIS.Message);
+            }
+            else
+            {
+                return Result<IS>.Fail(resultIS.Message);
+            }
+        }
+        #endregion Repository
     }
 }

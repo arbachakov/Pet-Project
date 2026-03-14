@@ -1,4 +1,5 @@
-﻿using Pet_Project.Menus;
+﻿using Pet_Project.Menu.SpecialMenu;
+using Pet_Project.Menus;
 using Pet_Project.Models;
 using Pet_Project.Pattern;
 using Pet_Project.Services;
@@ -47,13 +48,24 @@ namespace Pet_Project.Menu
         void ViewOffice()
         {
             Console.Clear();
-            Console.WriteLine(_blockService.ViewAll());
-            Console.WriteLine(_departmentService.ViewAll());
-            Console.WriteLine(GetWorkersInfo());
-            Console.WriteLine(GetManagementInfo);
+
+            Console.WriteLine(_blockService.GetInfo().Success ? 
+                _blockService.GetInfo().Data : 
+                _blockService.GetInfo().Message);
+
+            Console.WriteLine(_departmentService.GetInfo().Success ?
+                _departmentService.GetInfo().Data :
+                _departmentService.GetInfo().Message);
+
+            Console.WriteLine(_workerService.GetInfo().Success ?
+                _workerService.GetInfo().Data :
+                _workerService.GetInfo().Message);
+
             Console.WriteLine("Нажммите кнопку, чтобы вернуться...");
             Console.ReadKey();
         }
+
+        protected override void UpdateStartText() { }
 
         void ViewBlockMenu()
         {
@@ -69,58 +81,7 @@ namespace Pet_Project.Menu
         {
             _workerMenu.Run();
         }
-        // TODO исключить дублирование с WorkerMenu
-        string GetWorkersInfo()
-        {
-            Result<List<Worker>> resultWorrkers = _workerService.GetAll();
 
-            if (resultWorrkers.Success)
-            {
-                List<Worker> workers = resultWorrkers.Data;
 
-                string workersInfo = "Сотрудники:\n";
-                for (int i = 0; i < workers.Count; i++)
-                {
-                    workersInfo += $"Имя: {workers[i].Name} Фамилия: {workers[i].Sername} Id: {workers[i].Id}\n";
-                }
-                return workersInfo;
-            }
-            else
-            {
-                return resultWorrkers.Message;
-            }
-        }
-
-        // TODO исключить дублирование с WorkerMenu
-        string GetManagementInfo()
-        {
-            Result<Dictionary<Worker, Worker>> resultDict = _workerService.GetWorkerDict();
-
-            if (resultDict.Success)
-            {
-                Dictionary<Worker, Worker> workersDict = resultDict.Data;
-
-                if (workersDict.Count == 0)
-                {
-                    return "Нет связей для установки начальства";
-                }
-                else
-                {
-                    string managementInfo = "";
-
-                    foreach (var item in workersDict)
-                    {
-                        managementInfo += item.Key.Name + "руководит" + item.Value + "\n";
-                        return managementInfo;
-                    }
-                }
-            }
-            else
-            {
-                return resultDict.Message;
-            }
-
-            return resultDict.Message;
-        }
     }
 }

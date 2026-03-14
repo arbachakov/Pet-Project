@@ -1,12 +1,7 @@
 ﻿using Pet_Project.Interfaces;
 using Pet_Project.Model;
-using Pet_Project.Models;
+using Pet_Project.Pattern;
 using Pet_Project.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Pet_Project.Services
 {
@@ -22,50 +17,122 @@ namespace Pet_Project.Services
             _idGeneratorService = idGeneratorService;
         }
 
-        public List<Server> GetAll()
+        #region Repository
+        public Result<List<Server>> GetAll()
         {
-            return _repository.GetAll();
-        }
+            Result<List<Server>> resultServer = _repository.GetAll();
 
-        public string ViewAll()
-        {
-            string blocksInfo = "Информационные системы:\n";
-            List<Server> servers = GetAll();
-            if (servers.Count == 0)
-            { return "ИС нет("; }
-            for (int i = 0; i < servers.Count; i++)
+            if (resultServer.Success)
             {
-                blocksInfo += $"Название: {servers[i].Name} Id: {servers[i].Id}\n";
+                return Result<List<Server>>.Ok(resultServer.Data, resultServer.Message);
             }
-            return blocksInfo;
+            else
+            {
+                return Result<List<Server>>.Fail(resultServer.Message);
+            }
         }
 
-        public bool ChangeNameById(int id, string newName)
+        public Result<string> GetInfo()
         {
-            if (_repository.ChangeNameById(id, newName))
-            { return true; }
-            return false;
+            Result<List<Server>> result = _repository.GetAll();
 
+            if (result.Success)
+            {
+                List<Server> servers = result.Data;
+
+                string info = "Инф системы:\n";
+
+                if (servers.Count == 0)
+                {
+                    return Result<string>.Ok("Серверов нет.", "Информация составлена");
+                }
+
+                for (int i = 0; i < servers.Count; i++)
+                {
+                    info += $"Имя: {servers[i].Name} Id: {servers[i].Id}\n";
+                }
+                return Result<string>.Ok(info, "Информация составлена");
+            }
+            else
+            {
+                return Result<string>.Fail(result.Message);
+            }
         }
 
-        public Server GetById(int id)
+
+        public Result<Server> ChangeNameById(int id, string newName)
         {
-            return _repository.GetById(id);
+            Result<Server> resultServer = _repository.ChangeNameById(id, newName);
+
+            if (resultServer.Success)
+            {
+                return Result<Server>.Ok(resultServer.Data, resultServer.Message);
+            }
+            else
+            {
+                return Result<Server>.Fail(resultServer.Message);
+            }
+
         }
 
-        public Server Create(string name)
+        public Result<Server> ChangeSernameById(int id, string newSername)
+        {
+            Result<Server> resultServer = _repository.ChangeNameById(id, newSername);
+
+            if (resultServer.Success)
+            {
+                return Result<Server>.Ok(resultServer.Data, resultServer.Message);
+            }
+            else
+            {
+                return Result<Server>.Fail(resultServer.Message);
+            }
+        }
+
+        public Result<Server> DeleteById(int id)
+        {
+            Result<Server> resultServer = _repository.DeleteById(id);
+
+            if (resultServer.Success)
+            {
+                return Result<Server>.Ok(resultServer.Data, resultServer.Message);
+            }
+            else
+            {
+                return Result<Server>.Fail(resultServer.Message);
+            }
+        }
+
+        public Result<Server> GetById(int id)
+        {
+            Result<Server> resultServer = _repository.GetById(id);
+
+            if (resultServer.Success)
+            {
+                return Result<Server>.Ok(resultServer.Data, resultServer.Message);
+            }
+            else
+            {
+                return Result<Server>.Fail(resultServer.Message);
+            }
+        }
+
+        public Result<Server> Create(string name)
         {
             Server server = new Server(name);
             server.Id = _idGeneratorService.GenerateID();
-            _repository.Add(server);
-            return server;
-        }
 
-        public bool DeleteById(int id)
-        {
-            if (_repository.DeleteById(id))
-            { return true; }
-            return false;
+            Result<Server> resultServer = _repository.Add(server);
+
+            if (resultServer.Success)
+            {
+                return Result<Server>.Ok(resultServer.Data, resultServer.Message);
+            }
+            else
+            {
+                return Result<Server>.Fail(resultServer.Message);
+            }
         }
+        #endregion Repository
     }
 }

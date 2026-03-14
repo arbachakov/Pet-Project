@@ -1,65 +1,69 @@
 ﻿using Pet_Project.Interfaces;
-using Pet_Project.Models;
 using Pet_Project.Models.OfficeStructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Pet_Project.Pattern;
 
 namespace Pet_Project.Repositories
 {
     internal class DepartmentRepository : IRepository<Department>
     {
 
-        private List<Department> _departmants = new List<Department>();
+        private List<Department> _departments = new List<Department>();
 
-        public List<Department> GetAll()
+        public Result<List<Department>> GetAll() 
         {
-            return _departmants;
+            return Result<List<Department>>.Ok(_departments, "Список получен из репозитория");
         }
 
-        public bool Add(Department department)
+        public Result<Department> Add(Department department) 
         {
-            _departmants.Add(department);
-            return true;
+            _departments.Add(department);
+            return Result<Department>.Ok(department, $"Служба {department.Id} добавлен в репозиторий");
         }
 
 
-        public Department GetById(int id)
+        public Result<Department> GetById(int id) 
         {
-            for (int i = 0; i < _departmants.Count; i++)
+            for (int i = 0; i < _departments.Count; i++)
             {
-                if (_departmants[i].Id == id)
-                    return _departmants[i];
+                if (_departments[i].Id == id)
+                    return Result<Department>.Ok(_departments[i], $"Рабочий {_departments[i].Id} найден");
             }
-            return null;
+            return Result<Department>.Fail("Рабочий не найден в репозитории");
         }
 
 
-        public bool ChangeNameById(int id, string newName)
+        public Result<Department> ChangeNameById(int id, string newName) 
         {
-            Department department = GetById(id);
-            if (department != null)
+            Result<Department> result = GetById(id);
+
+            if (result.Success)
             {
+                Department department = result.Data;
+                string oldName = department.Name;
                 department.Name = newName;
-                return true;
+                return Result<Department>.Ok(department, $"У работника с id {department.Id} изменено имя c {oldName} на {newName}");
             }
-            return false;
-
+            else
+            {
+                return Result<Department>.Fail(result.Message);
+            }
         }
 
 
-        public bool DeleteById(int id)
+        public Result<Department> DeleteById(int id) // bool
         {
-            Department department = GetById(id);
-            if (department != null)
-            {
-                _departmants.Remove(department);
-                return true;
-            }
-            return false;
+            Result<Department> result = GetById(id);
 
+            if (result.Success)
+            {
+                Department department = result.Data;
+                _departments.Remove(department);
+                return Result<Department>.Ok(department, $"Рабочий {department.Id} удален"); ;
+            }
+            else
+            {
+                return Result<Department>.Fail(result.Message);
+            }
         }
     }
 }

@@ -1,11 +1,6 @@
 ﻿using Pet_Project.Interfaces;
-using Pet_Project.Models;
 using Pet_Project.Models.OfficeStructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Pet_Project.Pattern;
 
 namespace Pet_Project.Repositories
 {
@@ -13,50 +8,61 @@ namespace Pet_Project.Repositories
     {
         private List<Block> _blocks = new List<Block>();
 
-        public List<Block> GetAll()
-        { return _blocks; }
+        public Result<List<Block>> GetAll() 
+        {
+            return Result<List<Block>>.Ok(_blocks, "Список получен из репозитория");
+        }
 
-        public bool Add(Block block)
+        public Result<Block> Add(Block block)
         {
             _blocks.Add(block);
-            return true;
+            return Result<Block>.Ok(block, $"Рабочий {block.Id} добавлен в репозиторий");
         }
 
 
-        public Block GetById(int id)
+        public Result<Block> GetById(int id)
         {
             for (int i = 0; i < _blocks.Count; i++)
             {
                 if (_blocks[i].Id == id)
-                    return _blocks[i];
+                    return Result<Block>.Ok(_blocks[i], $"Рабочий {_blocks[i].Id} найден");
             }
-            return null;
+            return Result<Block>.Fail("Рабочий не найден в репозитории");
         }
 
 
-        public bool ChangeNameById(int id, string newName)
+        public Result<Block> ChangeNameById(int id, string newName)
         {
-            Block block = GetById(id);
-            if (block != null)
+            Result<Block> result = GetById(id);
+
+            if (result.Success)
             {
+                Block block = result.Data;
+                string oldName = block.Name;
                 block.Name = newName;
-                return true;
+                return Result<Block>.Ok(block, $"У работника с id {block.Id} изменено имя c {oldName} на {newName}");
             }
-            return false;
-
+            else
+            {
+                return Result<Block>.Fail(result.Message);
+            }
         }
 
 
-        public bool DeleteById(int id)
+        public Result<Block> DeleteById(int id)
         {
-            Block block = GetById(id);
-            if (block != null)
-            {
-                _blocks.Remove(block);
-                return true;
-            }
-            return false;
+            Result<Block> result = GetById(id);
 
+            if (result.Success)
+            {
+                Block block = result.Data;
+                _blocks.Remove(block);
+                return Result<Block>.Ok(block, $"Рабочий {block.Id} удален"); ;
+            }
+            else
+            {
+                return Result<Block>.Fail(result.Message);
+            }
         }
 
     }
